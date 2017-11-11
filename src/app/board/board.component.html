@@ -1,0 +1,5 @@
+<div class="container">
+  <div #e [id]="block" *ngFor="let block of boardArray" (click)="onClick(e)">
+    <app-cross [isActive]="isClick[block]" [isCompActive]="isCompSelected[block]"></app-cross>
+  </div>
+</div>

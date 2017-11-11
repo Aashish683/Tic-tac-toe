@@ -1,0 +1,12 @@
+.glyphicon.glyphicon-remove
+{
+    color:red;
+    font-size:40px;
+}
+.comp{
+ border: 2px solid blue;
+border-radius: 100%;
+position: absolute;
+height: 47px;
+width: 47px;
+}

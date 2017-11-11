@@ -1,0 +1,29 @@
+.container
+{
+    position:relative;
+    display:flex;
+    flex-flow:row wrap;
+    height: 555px;
+    width: 593px;
+    background-color:snow;
+    top:46px;
+    
+}
+.container div{
+    background-color:lightgray;
+    height: 181px;
+    width: 180px;
+    margin: 2px;
+}
+app-cross
+{
+    position:relative;
+    left:65px;
+    top:65px;
+}
+.alert.alert-danger
+{
+    position:relative;
+    width:200px;
+    left:167px;
+}
