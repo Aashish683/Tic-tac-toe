@@ -3,6 +3,7 @@ import { boardDisplayAnimation } from './board.component.animation';
 import { scoring } from './../Helper/scoring';
 import { check } from './../Helper/checkForWin';
 import {playAt} from './../Helper/minMax';
+import { setBlink } from './../Helper/setBlink';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -16,12 +17,24 @@ export class BoardComponent implements OnInit {
    gameComplete:boolean=false;
    wait:boolean=false;
    flag:number;
+   blink:boolean[]=[false,false,false,false,false,false,false,false,false];
+
+   constructor() { }
+
+
+   ngOnInit() {
+    this.boardArray=new Array(9);
+    this.boardArray=[0,1,2,3,4,5,6,7,8];
+  }
+
+
    onClick(e){
     if(this.gameComplete||this.isCompSelected[e.id]||this.isClick[e.id]||this.wait)
     return;
 
     this.isClick[e.id]=true;
     if(this.flag=check(this.isClick,this.isCompSelected).flag){
+    setBlink(check(this.isClick,this.isCompSelected).position,this.blink)
     this.gameComplete=true;
     setTimeout(()=>{this.flag==1?alert('You won'):alert('Draw');
     this.clear();},1000)
@@ -32,15 +45,12 @@ export class BoardComponent implements OnInit {
     this.wait=true;
     setTimeout(()=>{this.compPlay()},1000);
     if(check(this.isClick,this.isCompSelected).flag){
+    setBlink(check(this.isClick,this.isCompSelected).position,this.blink)
     this.gameComplete=true;
     setTimeout(()=>{this.flag==1?alert('You won'):alert('Draw');
     this.clear();},1000)
     }
     }
-   }
-  constructor() {
-    this.boardArray=new Array(9);
-    this.boardArray=[0,1,2,3,4,5,6,7,8];
    }
    compPlay()
    {
@@ -54,6 +64,7 @@ export class BoardComponent implements OnInit {
 
        if(this.flag=check(this.isClick,this.isCompSelected).flag)
        {
+       setBlink(check(this.isClick,this.isCompSelected).position,this.blink); 
        this.gameComplete=true;
        setTimeout(()=>{this.flag==2?alert('Computer won'):alert('Draw');
        this.clear();},1000)
@@ -64,15 +75,12 @@ export class BoardComponent implements OnInit {
   for(let i=0;i<this.isClick.length;i++)
   {
     this.isClick[i]=false;
-  }
-  for(let i=0;i<this.isCompSelected.length;i++)
-  {
     this.isCompSelected[i]=false;
+    this.blink[i]=false;
   }
   this.gameComplete=false; //Restart the game by allowing the user to click
  }
 
-  ngOnInit() {
-  }
+  
 
 }

@@ -38,8 +38,8 @@ export function check(isClick:boolean[],isCompSelected:boolean[])
    else if(noMovesLeft(isClick,isCompSelected))
    { //condition for a draw!
    //console.log(-1);
-   return {flag:-1};
+   return {flag:-1,position:[-1]};
    }
-   return {flag:0};
+   return {flag:0,position:[-1]};
 
 }

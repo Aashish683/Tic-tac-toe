@@ -1,5 +1,5 @@
 <div class="container" @boardTrig>
-  <div #e [id]="block" *ngFor="let block of boardArray" (click)="onClick(e)">
+  <div #e [id]="block" *ngFor="let block of boardArray" (click)="onClick(e)" [@blink]="blink[block]?'flash':'normal'">
     <app-cross [isActive]="isClick[block]" [isCompActive]="isCompSelected[block]"></app-cross>
   </div>
 </div>
