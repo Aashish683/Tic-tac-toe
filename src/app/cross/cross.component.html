@@ -1,1 +1,2 @@
-<span [class.glyphicon]="isActive" [class.glyphicon-remove]="isActive" [class.comp]="isCompActive"></span>
+<!--span [class.glyphicon]="isActive" [class.glyphicon-remove]="isActive" [class.comp]="isCompActive"></span-->
+<span [ngClass]="{'glyphicon':isActive,'glyphicon-remove':isActive,'comp':isCompActive}"></span>

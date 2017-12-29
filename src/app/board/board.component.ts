@@ -4,6 +4,8 @@ import { scoring } from './../Helper/scoring';
 import { check } from './../Helper/checkForWin';
 import {playAt} from './../Helper/minMax';
 import { setBlink } from './../Helper/setBlink';
+import { MatDialog } from '@angular/material/dialog';
+import { BoxComponent } from './../box/box.component';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -19,14 +21,12 @@ export class BoardComponent implements OnInit {
    flag:number;
    blink:boolean[]=[false,false,false,false,false,false,false,false,false];
 
-   constructor() { }
-
-
+   constructor(private dialog:MatDialog) { }
+   
    ngOnInit() {
     this.boardArray=new Array(9);
     this.boardArray=[0,1,2,3,4,5,6,7,8];
-  }
-
+    }
 
    onClick(e){
     if(this.gameComplete||this.isCompSelected[e.id]||this.isClick[e.id]||this.wait)
@@ -36,8 +36,7 @@ export class BoardComponent implements OnInit {
     if(this.flag=check(this.isClick,this.isCompSelected).flag){
     setBlink(check(this.isClick,this.isCompSelected).position,this.blink)
     this.gameComplete=true;
-    setTimeout(()=>{this.flag==1?alert('You won'):alert('Draw');
-    this.clear();},1000)
+    this.displayDialog();
     return;
     }
     else
@@ -47,8 +46,7 @@ export class BoardComponent implements OnInit {
     if(check(this.isClick,this.isCompSelected).flag){
     setBlink(check(this.isClick,this.isCompSelected).position,this.blink)
     this.gameComplete=true;
-    setTimeout(()=>{this.flag==1?alert('You won'):alert('Draw');
-    this.clear();},1000)
+    this.displayDialog();
     }
     }
    }
@@ -59,16 +57,13 @@ export class BoardComponent implements OnInit {
       return;        
       let index;
       index=playAt(this.isClick,this.isCompSelected);
-    
         this.isCompSelected[index]=true;
-
        if(this.flag=check(this.isClick,this.isCompSelected).flag)
        {
        setBlink(check(this.isClick,this.isCompSelected).position,this.blink); 
        this.gameComplete=true;
-       setTimeout(()=>{this.flag==2?alert('Computer won'):alert('Draw');
-       this.clear();},1000)
-       }
+       this.displayDialog();
+    }
   }
   clear()
   {
@@ -80,7 +75,17 @@ export class BoardComponent implements OnInit {
   }
   this.gameComplete=false; //Restart the game by allowing the user to click
  }
+ displayDialog(){
 
-  
-
+  setTimeout(()=>{//this.flag==2?alert('Computer won'):alert('Draw');
+  this.dialog.open(BoxComponent,{
+    width:'250px',
+    data:{
+       winner:this.flag
+    }
+  }).afterClosed().subscribe(response=>{
+    this.clear();
+  })
+  },1000)
+ }
 }
